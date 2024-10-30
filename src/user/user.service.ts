@@ -4,13 +4,22 @@ import { Model } from "mongoose";
 import { User } from "src/schemas/user.schema";
 import { CreateUserDto } from "./dto/createUser.dto";
 
+import * as bcrypt from 'bcrypt'
+
 @Injectable()
 export class UserService {
     constructor(@InjectModel(User.name) private UserModel: Model<User>) {}
 
-    createUser(createUserDto: CreateUserDto) {
+    async createUser(createUserDto: CreateUserDto) {
         try {
-            const newUser = new this.UserModel(createUserDto)
+            const salt = await bcrypt.genSalt(); 
+            
+            const hashedPwd = await bcrypt.hash(createUserDto.password, salt)
+
+            const newUser = new this.UserModel({
+                ...createUserDto,
+                password: hashedPwd
+            })
             newUser.save()
 
             return {
@@ -26,6 +35,15 @@ export class UserService {
             return `Error: ${err}`
         }
     }
+
+    async validateUser(email: string, password: string): Promise<User | null> {
+        const user = await this.UserModel.findOne({ email })
+        
+        if (user && await bcrypt.compare(password, user.password)) {
+          return user;
+        }
+        return null;
+      }
 
     getAllUsers() {
         try {

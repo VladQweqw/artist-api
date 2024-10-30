@@ -5,13 +5,14 @@ import { MongooseModule } from '@nestjs/mongoose'
 
 import { UserModule } from './user/user.module';
 import { ArtPiecesModule } from './artPieces/artPieces.module';
-import { MulterModule } from '@nestjs/platform-express';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb+srv://vladpoienariu:admin123@artist.5vhezvm.mongodb.net/artist?retryWrites=true&w=majority'),
-    ArtPiecesModule,
     UserModule,
+    AuthModule,
+    ArtPiecesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

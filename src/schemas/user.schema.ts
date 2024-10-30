@@ -7,6 +7,9 @@ export type userDocument = HydratedDocument<User>
     timestamps: true,
 })
 export class User {
+    toObject(): { [x: string]: any; password: any; } {
+        throw new Error("Method not implemented.");
+    }
     @Prop({required: true})
     name: string;
 
@@ -14,7 +17,10 @@ export class User {
     email: string;
 
     @Prop({required: true})
-    image_of_artist: string;
+    password: string;
+
+    @Prop({required: true})
+    image_of_artist?: string;
 
     @Prop()
     age: number;
