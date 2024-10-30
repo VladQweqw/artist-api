@@ -12,7 +12,7 @@ export class CreateUserDto {
     email: string;
 
     @IsString()
-    image_of_artist: string;
+    image_of_artist?: string;
 
     @IsNumber()
     age: number;

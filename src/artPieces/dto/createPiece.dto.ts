@@ -10,7 +10,5 @@ export class CreateArtPieceDto {
     @IsString()
     user_id: string;
 
-    @IsNotEmpty()
-    @IsString()
-    image_url: string;
+    image_url?: string;
 }
