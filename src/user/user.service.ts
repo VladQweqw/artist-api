@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { User } from "src/schemas/user.schema";
 import { CreateUserDto } from "./dto/createUser.dto";
+import { jwtDecode } from "jwt-decode";
 
 import * as bcrypt from 'bcrypt'
 
@@ -62,6 +63,19 @@ export class UserService {
         }
         catch(err) {
             return "Invalid user ID"
+        }
+    }
+
+    async getUserByJwt( token: string) {
+        try {
+            const decoded: any = jwtDecode(token)
+            
+            const user = await this.UserModel.findById(decoded._id).select("name email image_of_artist age createdAt updatedAt")
+
+            return user
+        }
+        catch(err) {
+            return "Invalid user IDawd"
         }
     }
 

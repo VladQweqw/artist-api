@@ -47,7 +47,10 @@ export class ArtPieces {
 
   async getByPieceId(id: string) {
     try {
-      const piece = await this.ArtPieceModel.findById(id)
+      const piece = await this.ArtPieceModel.findById(id).populate({
+        path: "user_id",
+        select: "name email _id image_of_artist"
+      })
 
       return piece
     }
@@ -58,8 +61,13 @@ export class ArtPieces {
 
   async getByUserId(user_id: string) {
     try {
+    
+
       const pieces = await this.ArtPieceModel.find({
-        user_id: user_id
+        user_id: new Types.ObjectId(user_id)
+      }).populate({
+        path: "user_id",
+        select: "name email _id image_of_artist"
       })
             
       return pieces

@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
+import sizeOf from 'image-size'
+
 @Controller('pieces')
 export class ArtPiecesController {
   constructor(private artsPieces: ArtPieces) {}
@@ -25,6 +27,11 @@ export class ArtPiecesController {
   create(@UploadedFile() file: Express.Multer.File, @Body() CreateArtPieceDto: CreateArtPieceDto) {
     if(file) {
       CreateArtPieceDto.image_url = `/public/uploads/${file.filename}`
+      
+      const sizes = sizeOf(`./public/uploads/${file.filename}`)
+      CreateArtPieceDto.width = sizes.width
+      CreateArtPieceDto.height = sizes.height
+          
     }
     
     return this.artsPieces.createPiece(CreateArtPieceDto);

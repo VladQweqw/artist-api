@@ -11,4 +11,7 @@ export class CreateArtPieceDto {
     user_id:Types.ObjectId;
 
     image_url?: string;
+
+    width?: number
+    height?: number
 }

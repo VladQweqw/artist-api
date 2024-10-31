@@ -16,6 +16,11 @@ export class ArtPiece {
     @Prop({ required: true})
     image_url: string;
 
+    @Prop()
+    width: number
+
+    @Prop()
+    height: number
 }
 
 export const ArtPieceSchema = SchemaFactory.createForClass(ArtPiece);

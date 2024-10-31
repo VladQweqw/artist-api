@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseInterceptors, UploadedFile } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Request, Delete, Put, UseInterceptors, UploadedFile } from "@nestjs/common";
 import { CreateUserDto } from "./dto/createUser.dto";
 import { UserService } from "./user.service";
 import { diskStorage } from 'multer';
@@ -34,8 +34,15 @@ export class UserController {
         return await this.user.getAllUsers()
     }
 
+    @Get("jwt")
+    getUserByJwt(@Request() req) {     
+        console.log('awd');
+            
+        return this.user.getUserByJwt(req.cookies.token)
+    }
+
     @Get(":id")
-    getUser(@Param('id') id: string) {
+    getUser( @Param('id') id: string) {        
         return this.user.getUser(id)
     }
 
