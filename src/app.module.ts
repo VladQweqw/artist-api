@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://vladpoienariu:admin123@artist.5vhezvm.mongodb.net/artist?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('DB PATH'),
     UserModule,
     AuthModule,
     ArtPiecesModule,
