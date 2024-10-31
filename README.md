@@ -1,99 +1,81 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Documentatie - Poienariu Vlad
+* Website: https://vladpoienariu.netlify.app/
+* Github: https://github.com/VladQweqw?tab=repositories
+* LinkedIn: https://www.linkedin.com/in/vlad-poienariu-0a79a721a/
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Link-uri proiect
+* API: https://github.com/VladQweqw/artist-api
+* React: https://github.com/VladQweqw/artist-portofolio
+* Routele Postman sunt in fisierul artist.json din folderul atasat
+---
 
-## Description
+### Frontend
+Pentru Front-End urmati pasii urmatori:
+1. npm install
+2. npm run dev
+3. asigurati-va ca port: 5173 este liber
+4. ar trebuie localhost:5173 sa apara site-ul
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Pentru partea de Front-End am folosit React + Vite + TypeScript. Mie personal imi place sa folosesc *Vite.js* in proiectele mele deoarece este foarte rapid, produce un build de dimensiuni mici si rapid. Overall mi se pare o imbunatatire fara de React Vanilla.
+TypeScript dupa parerea mea ar trebui sa fie folosit in orice website modern, deoarece previne bug-urile si ofera o experienta de developement foarte usor de inteles si previzibila.
 
-## Project setup
+---
+### Backend
+Pentru Back-End urmati pasii urmatori:
+1. npm i
+2. npm run start:dev
+3. asigurati-va ca port: 3333 este liber ( se poate modifica din main.ts )
+4. dupa acesti pasi, ar trebuie pe localhost:3333 sa ruleze API-ul
+5. Conectarea la o baza de date, ( Eu am folosit mongoDB)
 
-```bash
-$ npm install
-```
+Partea de Back-end este sigurata datorita integrari JWT, un JWT este generat la fiecare logare si este folosit pe tot parcursul folosinti site-ului de catre user. Pentru backend am mai folosit si MongoDB + mongoose.
 
-## Compile and run the project
+---
+### Explicatia aplicatiei
 
-```bash
-# development
-$ npm run start
+Aplicatia create are scopul de a servi ca o platforma in care fotografii, artisti de toate felurile sau chiar artisti digitali sa isi poate expune creatiile cu usurinta. Aplicatia beneficiaza de un design modern, usor de inteles si o paleta de culori calda. 
+Rutele existente sunt:
+/ -> Home
 
-# watch mode
-$ npm run start:dev
+/login -> pagina de login
 
-# production mode
-$ npm run start:prod
-```
+/signup -> pagina de sign up
 
-## Run tests
+/account -> pagina user-ului conectat
 
-```bash
-# unit tests
-$ npm run test
+/contact -> pagina de contanct 
 
-# e2e tests
-$ npm run test:e2e
+/pieces/:id -> pagina dynamica a unei creatii
 
-# test coverage
-$ npm run test:cov
-```
+/users/:id -> pagina dinamica a unui user
 
-## Deployment
+/* -> pagina 404
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Pe pagina individuala a unei creatii regasim atat numele creatiei, imaginea, cat si detalii despre author
+Pe pagina individuala a unui user, regasit toate detalile user-ului, dar si toate creatile sale.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Daca user-ul nu este conectat, in navbar, butonul cu textul account v-a fi inlocuit cu unul de sign up
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
+### Folosirea aplicatiei
 
-## Resources
+In momentul in care aplicatia s-a deschis, ar fi indicat sa ne creem un cont urmand /signup sau apasand pe butonul *Sign Up* din navbar, Dupa accea ne alegem un Username, un email real, deorece v-a fi validat, si o parola fara restrictii. Dupa apasam pe butoul de *Sign up*. Daca avem deja cont avem optiunea de a navigate catre /login pentru a ne loga. 
 
-Check out a few resources that may come in handy when working with NestJS:
+Dupa apasare vom fi redirectionati catre /login unde ne logam cu email si parola. Daca credentials-urile sunt corecte vom fi redirectionati pe pagina principala si ne v-a aparea butonul acccount.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Daca scrollam gasim toate postarile de la toti useri de pana acum, daca apasam pe o imagine vom fi redirectionati catre /piece/id unde vom afla mai multe detalii despre imagine, cat si user-ul,
 
-## Support
+La fiecare imagine in coltul din stanga jos este prezentata imaginea user-ului pe care putem da si ne v-a conduce la user/id, care este pagina dedicata user-ului. unde putem vedea si toate postarile acestuia.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Pe pagina account avem optiunea de a ne modifica poza de profil dar si numele, sa vedem toate postarile noastrea dar si sa adaugam postari prin formular de jos.
 
-## Stay in touch
+Urmarea oricarei rute care nu este valida ne v-a redirectiona la pagina principala /
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
+### Multumesc pentru oportunitate
+Timpul total alocat acestui proiect a fost limitat din cauze diversilor factori, din pacate se pot regasii multe edge case-uri, am incercat sa ofer un design UI&UX cat mai placut si o calitate cat mai inalta, Multumesc!
 
-## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
