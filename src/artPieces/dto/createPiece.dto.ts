@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateArtPieceDto {
     
@@ -7,8 +8,7 @@ export class CreateArtPieceDto {
     title: string;
     
     @IsNotEmpty()
-    @IsString()
-    user_id: string;
+    user_id:Types.ObjectId;
 
     image_url?: string;
 }

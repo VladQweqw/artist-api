@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ArtPiece } from 'src/schemas/artPieces.schema';
-
+import { Types } from 'mongoose';
 import { CreateArtPieceDto } from './dto/createPiece.dto';
 
 @Injectable()
@@ -12,12 +12,14 @@ export class ArtPieces {
 
   createPiece(createPieceDto: CreateArtPieceDto) {
       try {
+        createPieceDto.user_id = new Types.ObjectId(createPieceDto.user_id)
         const newPiece = new this.ArtPieceModel(createPieceDto)
+        console.log(createPieceDto);
 
         newPiece.save()
 
         return {
-          detail: "User created succesfully",
+          detail: "Piece created succesfully",
           piece: newPiece
         }
       }
@@ -32,7 +34,10 @@ export class ArtPieces {
 
   getAll() {
     try {
-      const artPieces = this.ArtPieceModel.find().populate('user_id')
+      const artPieces = this.ArtPieceModel.find().populate({
+        path: "user_id",
+        select: "name email _id image_of_artist"
+      })
       return artPieces
     }
     catch(err) {

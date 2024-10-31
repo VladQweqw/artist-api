@@ -23,7 +23,6 @@ export class ArtPiecesController {
     })
   }))
   create(@UploadedFile() file: Express.Multer.File, @Body() CreateArtPieceDto: CreateArtPieceDto) {
-    console.log(file);
     if(file) {
       CreateArtPieceDto.image_url = `/public/uploads/${file.filename}`
     }
