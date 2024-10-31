@@ -4,8 +4,9 @@ import { Model } from "mongoose";
 import { User } from "src/schemas/user.schema";
 import { CreateUserDto } from "./dto/createUser.dto";
 import { jwtDecode } from "jwt-decode";
-
 import * as bcrypt from 'bcrypt'
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class UserService {
@@ -69,6 +70,7 @@ export class UserService {
     async getUserByJwt( token: string) {
         try {
             const decoded: any = jwtDecode(token)
+            console.log(decoded);
             
             const user = await this.UserModel.findById(decoded._id).select("name email image_of_artist age createdAt updatedAt")
 
@@ -93,15 +95,32 @@ export class UserService {
         }
     }
 
-    async updateUser(id: string, CreateUserDto: CreateUserDto) {
+    async updateUser(id: string, file, createUserDto: CreateUserDto) {
+        
         try {
+            const user = await this.UserModel.findById(id)
+            
+            user.name = createUserDto.name;
+            if(file) {
+                let oldImgPath = path.join(__dirname, '..', '..', user.image_of_artist)
+                console.log("OLD IMAGE", oldImgPath);
+                
+                if(fs.existsSync(oldImgPath)) {
+                    fs.unlinkSync(oldImgPath)
+                }
+
+                user.image_of_artist = `/public/artists-photos/${file.filename}`
+            }
+            
+            
+            
             await this.UserModel.updateOne({
               _id: id
-            }, CreateUserDto)
-      
+            }, user)
+            
             return {
               detail: `User with ID:${id} updated`,
-              piece: CreateUserDto
+              user: CreateUserDto
             }
           }
           catch(err) {

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Request, Delete, Put, UseIntercepto
 import { CreateUserDto } from "./dto/createUser.dto";
 import { UserService } from "./user.service";
 import { diskStorage } from 'multer';
-import { FileInterceptor } from "@nestjs/platform-express";
+import { FileInterceptor, NoFilesInterceptor } from "@nestjs/platform-express";
 
 @Controller('user')
 export class UserController {
@@ -36,9 +36,13 @@ export class UserController {
 
     @Get("jwt")
     getUserByJwt(@Request() req) {     
-        console.log('awd');
-            
-        return this.user.getUserByJwt(req.cookies.token)
+        const authHeader = req.headers['authorization'];
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            const token = authHeader.split(' ')[1];
+            req['token'] = token; 
+        }
+                
+        return this.user.getUserByJwt(req.cookies.token || req.token)
     }
 
     @Get(":id")
@@ -51,9 +55,20 @@ export class UserController {
         return this.user.deleteUser(id)
     }
 
+    @UseInterceptors(FileInterceptor("image_of_artist", {
+        storage: diskStorage({
+            destination: "./public/artists-photos",
+            filename: (req, file, callback) => {
+                const uniqueSuffix = Date.now() + "-" + Math.floor(Math.random() * 1000)
+                const extension = file.mimetype.split('/')[1]
+        
+                callback(null, `${uniqueSuffix}.${extension}`)
+              }
+        })
+    }))
     @Put(":id")
-    updateUser(@Param("id") id:string, @Body() createUserDto: CreateUserDto) {
-        return this.user.updateUser(id, createUserDto)
+    updateUser(@Param("id") id:string,@UploadedFile() file: Express.Multer.File, @Body() createUserDto: CreateUserDto) {
+        return this.user.updateUser(id, file, createUserDto)
     }
 
 }

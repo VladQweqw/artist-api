@@ -30,16 +30,18 @@ export class AuthController {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
-    const acces_token = await this.authService.login(user)
+    const access_token = await this.authService.login(user)
+    const jwtToken = access_token.access_token; // Ensure this is a valid JWT
     
-    const jwtToken = acces_token.access_token;
-    return res.cookie('token', jwtToken, {
-      httpOnly: true, 
-      secure: false, 
-      maxAge: 3600000, // 1h in ms
-    })
-    .status(200)
-    .json(acces_token);
+    res.cookie('token', jwtToken, {
+      httpOnly: true, // Prevent JavaScript access to the cookie
+      secure: false, // Set to true if you're using HTTPS
+      sameSite: 'none', // Required for cross-origin cookies
+      maxAge: 3600000, // 1 hour in milliseconds
+    });
+  
+    // Send response separately
+    return res.status(200).json(access_token); // Send the access token information
     
 
   }
